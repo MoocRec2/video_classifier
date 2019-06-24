@@ -78,7 +78,7 @@ def videoStyles(file):
     slide_p = round(((slide / img_count) * 100), 2)
     return head_p, code_p, slide_p
 
-head_c,code_c,slide_c = videoStyles('./test.mp4')
-print('Talkin Head: '+str(head_c))
-print('Code: '+str(code_c))
-print('Slide: '+str(slide_c))
+    head_c,code_c,slide_c = videoStyles('./test.mp4')
+    print('Talkin Head: '+str(head_c))
+    print('Code: '+str(code_c))
+    print('Slide: '+str(slide_c))
