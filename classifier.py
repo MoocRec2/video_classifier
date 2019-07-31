@@ -11,10 +11,10 @@ K.set_image_dim_ordering('tf')
 classifier_path = './models/vgg16_model.h5'
 classifier = load_model(classifier_path)
 classifier.summary()
-model = VGG16(weights='imagenet', include_top=False )
+model = VGG16(weights='imagenet', include_top=False)
 
-video_directory = './videos'
-img_directory = './images'
+video_directory = './videos/'
+img_directory = './images/'
 num = 0
 count = 0
 head = 0
@@ -78,7 +78,7 @@ def videoStyles(file):
     slide_p = round(((slide / img_count) * 100), 2)
     return head_p, code_p, slide_p
 
-head_c,code_c,slide_c = videoStyles('./test.mp4')
+head_c,code_c,slide_c = videoStyles('test.mp4')
 print('Talkin Head: '+str(head_c))
 print('Code: '+str(code_c))
 print('Slide: '+str(slide_c))
