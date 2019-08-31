@@ -92,7 +92,7 @@ def videoStyles(file):
     return head_p, code_p, slide_p, animation_p, writing_p
 
 head_c, code_c, slide_c, animation_c, writing_c = videoStyles('Derivatives... How_ (NancyPi).mp4')
-print('Talkin Head: '+str(head_c))
+print('Talking Head: '+str(head_c))
 print('Code: '+str(code_c))
 print('Slide: '+str(slide_c))
 print('Animation: '+str(animation_c))
