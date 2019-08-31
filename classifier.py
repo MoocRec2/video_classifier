@@ -6,7 +6,7 @@ from keras.applications.vgg16 import VGG16
 from keras.preprocessing import image
 from keras.models import load_model
 from keras import backend as K
-K.set_image_dim_ordering('tf')
+K.image_data_format()
 
 classifier_path = './models/vgg16_model.h5'
 classifier = load_model(classifier_path)
@@ -20,6 +20,7 @@ count = 0
 head = 0
 code = 0
 slide = 0
+animation = 0
 model = VGG16(weights='imagenet', include_top=False )
 classifier_path = './models/vgg16_model.h5'
 
@@ -38,15 +39,17 @@ def predict(file):
     features = model.predict(x)
     result = classifier.predict_classes(features)
     if result[0] == 0:
-        prediction = 'code'
+        prediction = 'animation'
     elif result[0] == 1:
-        prediction = 'head'
+        prediction = 'code'
     elif result[0] == 2:
+        prediction = 'head'
+    elif result[0] == 3:
         prediction = 'slide'
     return prediction
 
 def videoStyles(file):
-    global count,head,code,slide,num
+    global count,head,code,slide,animation,num
     cap = cv2.VideoCapture(video_directory+file)
     while cap.isOpened():
         ret, frame = cap.read()
@@ -70,15 +73,19 @@ def videoStyles(file):
             code +=1
         elif temp == 'slide':
             slide +=1
+        elif temp == 'animation':
+            animation +=1
 
     deleteImages()
 
     head_p = round(((head / img_count) * 100), 2)
     code_p = round(((code / img_count) * 100), 2)
     slide_p = round(((slide / img_count) * 100), 2)
-    return head_p, code_p, slide_p
+    animation_p = round(((animation / img_count) * 100), 2)
+    return head_p, code_p, slide_p,animation_p
 
-head_c,code_c,slide_c = videoStyles('test.mp4')
+head_c,code_c,slide_c,animation_c = videoStyles('OSI Model Explained _ OSI Animation _ Open System Interconnection Model _ OSI 7 layers _ TechTerms.mp4')
 print('Talkin Head: '+str(head_c))
 print('Code: '+str(code_c))
 print('Slide: '+str(slide_c))
+print('Animation: '+str(animation_c))
