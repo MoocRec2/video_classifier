@@ -18,9 +18,11 @@ img_directory = './images/'
 num = 0
 count = 0
 head = 0
+writing = 0
 code = 0
 slide = 0
 animation = 0
+
 model = VGG16(weights='imagenet', include_top=False )
 classifier_path = './models/vgg16_model.h5'
 
@@ -46,10 +48,12 @@ def predict(file):
         prediction = 'head'
     elif result[0] == 3:
         prediction = 'slide'
+    elif result[0] == 4:
+        prediction = 'writing'
     return prediction
 
 def videoStyles(file):
-    global count,head,code,slide,animation,num
+    global count,head,code,slide,animation,writing,num
     cap = cv2.VideoCapture(video_directory+file)
     while cap.isOpened():
         ret, frame = cap.read()
@@ -75,6 +79,8 @@ def videoStyles(file):
             slide +=1
         elif temp == 'animation':
             animation +=1
+        elif temp == 'writing':
+            writing +=1
 
     deleteImages()
 
@@ -82,10 +88,12 @@ def videoStyles(file):
     code_p = round(((code / img_count) * 100), 2)
     slide_p = round(((slide / img_count) * 100), 2)
     animation_p = round(((animation / img_count) * 100), 2)
-    return head_p, code_p, slide_p,animation_p
+    writing_p = round(((writing / img_count) * 100), 2)
+    return head_p, code_p, slide_p, animation_p, writing_p
 
-head_c,code_c,slide_c,animation_c = videoStyles('OSI Model Explained _ OSI Animation _ Open System Interconnection Model _ OSI 7 layers _ TechTerms.mp4')
+head_c, code_c, slide_c, animation_c, writing_c = videoStyles('Derivatives... How_ (NancyPi).mp4')
 print('Talkin Head: '+str(head_c))
 print('Code: '+str(code_c))
 print('Slide: '+str(slide_c))
 print('Animation: '+str(animation_c))
+print('Writing: '+str(writing_c))
